@@ -41,6 +41,7 @@
 					'thumbwidth': 100,  // Preferred thumbnail width (height will scale accordingly)
 					'tags': [],  // Post tags to search for
 					'type': '',  // Limit posts to type. Empty string ('') for all types.
+					'apikey':'', // Tumblr API key
 					'titlehtml': '<h3>Related Posts</h3>'};
 
 	$.fn.relatedposts = function(options) {
@@ -67,7 +68,7 @@
 		else {
 			$(config.tags).each(function (i, tag) {
 				console.info('Related posts: Sending request for tag “' + tag + '”…');
-				$.getJSON('http://api.tumblr.com/v2/blog/' + (config.domain || document.domain) + '/posts/' + config.type + '?api_key=Bmv7rBP9ST8N3SmHcwW2ht3qU0gbnljPFh21FWtAipyWlrsgL2&limit=' + (config.num + 1) + '&offset=0&tags=' + escape(tag) + '&jsonp=?', function (data, textStatus, jqXHR) {
+				$.getJSON('http://api.tumblr.com/v2/blog/' + (config.domain || document.domain) + '/posts/' + config.type + '?api_key=' + (config.apikey) + '&limit=' + (config.num + 1) + '&offset=0&tags=' + escape(tag) + '&jsonp=?', function (data, textStatus, jqXHR) {
 					console.info('Related posts: Got answer for tag “' + tag + '”…', data);
 					if (related_posts.length == config.num) {
 						console.info('Related posts: Skipping processing for tag “' + tag + '” because we already have hit the limit.');
